@@ -1,20 +1,25 @@
 import Data.Complex
- 
+
+depth :: Int
+depth = 15 -- 15 ascii symbols [33..47]
+
+bailout :: Double
+bailout = 2.0 -- escape radius
+
 reals :: [Double]
-reals = [-2,-1.97..0.5]
+reals = [-2,-1.975..0.5]
 
 imags :: [Double]
 imags = [1,0.95..(-1)]
 
 -- extract escape iteration
-mandelbrot :: Int -> Complex Double -> Int
-mandelbrot n c = length $ filter  (\z -> magnitude z > 2) 
-               $ take n $ iterate (\z -> z * z + c) 0
+mandelbrot :: Complex Double -> Int
+mandelbrot c = length $ filter (\z -> magnitude z > bailout) 
+             $ take depth $ iterate (\z -> z * z + c) 0
 
 -- select ascii char
-escape :: Int -> Complex Double -> Char
-escape n c = toEnum $ (+33) $ mandelbrot n c
+escape :: Complex Double -> Char
+escape c = toEnum $ (+33) $ mandelbrot c
 
 main :: IO ()
-main = mapM_ putStrLn [ [ escape 15 (r :+ i) | r <- reals ] | i <- imags ]
--- notice 15 ascii symbols [33..47]
+main = mapM_ putStrLn [ [ escape (r :+ i) | r <- reals ] | i <- imags ]
