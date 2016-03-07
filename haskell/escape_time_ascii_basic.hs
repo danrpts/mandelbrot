@@ -16,7 +16,7 @@ imags = [1,0.95  ..(-1)] -- imaginary axis
 mandelbrot :: Complex Double -> Double
 mandelbrot c = magnitude $ iterate (\z -> z * z + c) 0 !! depth
 
--- magnitude descirbes if it escape
+-- magnitude describes if it escape
 describe :: Complex Double -> Char
 describe c
    | mandelbrot c > bailout = ' '
