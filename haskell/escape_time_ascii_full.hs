@@ -18,7 +18,6 @@ mandelbrot c  = (l, magnitude $ zs !! l)
    where   l  = length zs
            zs = filter (\z -> magnitude z > bailout) 
               $ take depth $ iterate (\z -> z * z + c) 0
-              -- depth is 10 for ascii chars [48..57]
 
 -- iteration describes when it escaped
 describe :: Complex Double -> Char
