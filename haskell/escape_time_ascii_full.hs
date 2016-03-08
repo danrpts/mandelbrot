@@ -18,12 +18,12 @@ mandelbrot c  = (l, magnitude $ zs !! l)
    where   l  = length zs
            zs = filter (\z -> magnitude z > bailout) 
               $ take depth $ iterate (\z -> z * z + c) 0
+              -- depth is 10 for ascii chars [48..57]
 
--- iteration describes when it escaped
+-- i & m together can be used to smooth out banding
 describe :: Complex Double -> Char
 describe c = toEnum $ (+48) $ i
-    where (i, m) = mandelbrot c
-    -- i & m together can be used to smooth out banding
+   where (i, m) = mandelbrot c
 
 main :: IO ()
 main = mapM_ putStrLn [ [ describe $ r :+ i | r <- reals ] | i <- imags ]
